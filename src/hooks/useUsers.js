@@ -45,57 +45,61 @@ export const useUsers = () => {
     }
 
     const handlerAddUser = async (user) => {
-        // console.log(user);
-
         if (!login.isAdmin) return;
 
-        let response;
         try {
-
-            if (user.id === 0) {
-                response = await save(user);
-            } else {
-                response = await update(user);
-            }
+            const isNew = user.id === 0;
+            const response = isNew ? await save(user) : await update(user);
 
             dispatch({
-                type: (user.id === 0) ? 'addUser' : 'updateUser',
+                type: isNew ? 'addUser' : 'updateUser',
                 payload: response.data,
             });
 
-            await Swal.fire(
-                (user.id === 0) ?
-                    'Usuario Creado' :
-                    'Usuario Actualizado',
-                (user.id === 0) ?
-                    'El usuario ha sido creado con exito!' :
-                    'El usuario ha sido actualizado con exito!',
-                'success'
-            );
+            await showSuccessAlert(isNew);
             handlerCloseForm();
             navigate('/users');
-        } catch (error) {
-            if (error.response && error.response.status == 400) {
-                setErrors(error.response.data);
-            } else if (error.response && error.response.status == 500 &&
-                error.response.data?.message?.includes('constraint')) {
 
-                if (error.response.data?.message?.includes('UK_username')) {
-                    setErrors({ username: 'El username ya existe!' })
-                }
-                if (error.response.data?.message?.includes('UK_email')) {
-                    setErrors({ email: 'El email ya existe!' })
-                }
-            } else if (error.response?.status == 401) {
-                handlerLogout();
-            } else {
-                throw error;
-            }
+        } catch (error) {
+            handleUserError(error);
         }
-    }
+    };
+
+    const showSuccessAlert = (isNew) => {
+        return Swal.fire(
+            isNew ? 'Usuario Creado' : 'Usuario Actualizado',
+            isNew
+                ? 'El usuario ha sido creado con exito!'
+                : 'El usuario ha sido actualizado con exito!',
+            'success'
+        );
+    };
+
+    const handleUserError = (error) => {
+        const status = error.response?.status;
+        const message = error.response?.data?.message;
+
+        if (status === 400) {
+            setErrors(error.response.data);
+            return;
+        }
+
+        if (status === 500 && message?.includes('constraint')) {
+            if (message.includes('UK_username')) setErrors({ username: 'El username ya existe!' });
+            if (message.includes('UK_email')) setErrors({ email: 'El email ya existe!' });
+            return;
+        }
+
+        if (status === 401) {
+            handlerLogout();
+            return;
+        }
+
+        throw error;
+    };
+
 
     const handlerRemoveUser = (id) => {
-        // console.log(id);
         if(!login.isAdmin) return;
         Swal.fire({
             title: 'Esta seguro que desea eliminar?',

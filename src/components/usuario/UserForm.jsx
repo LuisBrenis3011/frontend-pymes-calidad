@@ -80,7 +80,7 @@ export const UserForm = ({ userSelected, handlerCloseForm }) => {
                 checked={admin}
                 className="form-check-input"
                 onChange={onCheckboxChange}/>
-                <label className="form-check-label">
+                <label htmlFor="admin" className="form-check-label">
                     Admin
                 </label>
 

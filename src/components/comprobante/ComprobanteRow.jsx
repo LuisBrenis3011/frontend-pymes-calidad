@@ -1,5 +1,7 @@
 import { useContext, useState } from "react";
 import { ComprobanteContext } from "../../context/ComprobanteContext";
+import PropTypes from "prop-types";
+import {ComprobanteModalForm} from "./ComprobanteModalForm.jsx";
 
 export const ComprobanteRow = ({ comprobante }) => {
     const { handlerRemoveComprobante, handlerComprobanteSelectedForm } = useContext(ComprobanteContext);
@@ -73,4 +75,8 @@ export const ComprobanteRow = ({ comprobante }) => {
             )}
         </>
     );
+};
+
+ComprobanteRow.propTypes = {
+    comprobante: PropTypes.node.isRequired,
 };

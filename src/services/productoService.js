@@ -1,6 +1,6 @@
 import productosApi from "../api/productosApi.js";
 
-const BASE_URL = ''; // porque productosApi ya apunta a /producto
+const BASE_URL = '';
 
 export const findByEmpresa = async (empresaId) => {
     try {
@@ -29,6 +29,7 @@ export const save = async (empresaId, { nombre, descripcion, valorUnitario, unid
             unidadMedida
         });
     } catch (error) {
+        console.log(error)
         throw error;
     }
 };
@@ -42,6 +43,7 @@ export const update = async (empresaId, { id, nombre, descripcion, valorUnitario
             unidadMedida
         });
     } catch (error) {
+        console.log(error)
         throw error;
     }
 };
@@ -50,6 +52,7 @@ export const remove = async (empresaId, id) => {
     try {
         await productosApi.delete(`/${id}/empresa/${empresaId}`);
     } catch (error) {
+        console.log(error)
         throw error;
     }
 };

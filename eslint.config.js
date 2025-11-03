@@ -24,6 +24,16 @@ export default defineConfig([
     },
     rules: {
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+        'react/prop-types': 'off',
     },
   },
+    {
+        files: ['**/*.test.{js,jsx}', '**/__tests__/**/*.{js,jsx}'],
+        languageOptions: {
+            globals: {
+                ...globals.jest, // Agrega las globales de Jest
+
+            },
+        },
+    },
 ])

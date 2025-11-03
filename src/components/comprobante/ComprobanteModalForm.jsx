@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import {ComprobanteContext} from "../../context/ComprobanteContext.jsx";
+import PropTypes from "prop-types";
 
 
 export const ComprobanteModalForm = ({ productos }) => {
@@ -106,7 +107,7 @@ export const ComprobanteModalForm = ({ productos }) => {
                         <div className="modal-body">
                             {/* Tipo de comprobante */}
                             <div className="mb-3">
-                                <label className="form-label">Tipo de Comprobante</label>
+                                <label htmlFor="tipoComprobante" className="form-label">Tipo de Comprobante</label>
                                 <select
                                     className="form-select"
                                     name="tipo"
@@ -120,7 +121,7 @@ export const ComprobanteModalForm = ({ productos }) => {
 
                             {/* Fecha */}
                             <div className="mb-3">
-                                <label className="form-label">Fecha</label>
+                                <label htmlFor="fechaComprobante" className="form-label">Fecha</label>
                                 <input
                                     type="date"
                                     className="form-control"
@@ -133,7 +134,7 @@ export const ComprobanteModalForm = ({ productos }) => {
                             {/* Cliente */}
                             <div className="row">
                                 <div className="col-md-6 mb-3">
-                                    <label className="form-label">Nombre del Cliente</label>
+                                    <label htmlFor="clienteNombreComprobante" className="form-label">Nombre del Cliente</label>
                                     <input
                                         type="text"
                                         className={`form-control ${errors.clienteNombre ? "is-invalid" : ""}`}
@@ -167,7 +168,7 @@ export const ComprobanteModalForm = ({ productos }) => {
 
                             {/* Selección de productos */}
                             <div className="mb-3">
-                                <label className="form-label">Agregar Productos</label>
+                                <label htmlFor="productoComprobante" className="form-label">Agregar Productos</label>
                                 <select
                                     className="form-select"
                                     onChange={(e) => {
@@ -263,4 +264,15 @@ export const ComprobanteModalForm = ({ productos }) => {
             </div>
         </div>
     );
+};
+
+ComprobanteModalForm.propTypes = {
+    children: PropTypes.node.isRequired,
+    productos: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            nombre: PropTypes.string.isRequired,
+            valorUnitario: PropTypes.number.isRequired
+        })
+    ).isRequired
 };

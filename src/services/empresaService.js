@@ -13,7 +13,7 @@ export const findAll = async () => {
 };
 
 export const save = async ({ razonSocial, ruc, email, direccion }) => {
-    // eslint-disable-next-line no-useless-catch
+
     try {
         // El username lo añade automáticamente el backend a partir del token
         return await empresasApi.post(BASE_URL, {
@@ -23,12 +23,13 @@ export const save = async ({ razonSocial, ruc, email, direccion }) => {
             direccion
         });
     } catch (error) {
+        console.log(error)
         throw error;
     }
 };
 
 export const update = async ({ id, razonSocial, ruc, email, direccion }) => {
-    // eslint-disable-next-line no-useless-catch
+
     try {
         return await empresasApi.put(`/${id}`, {
             razonSocial,
@@ -37,15 +38,17 @@ export const update = async ({ id, razonSocial, ruc, email, direccion }) => {
             direccion
         });
     } catch (error) {
+        console.log(error)
         throw error;
     }
 };
 
 export const remove = async (id) => {
-    // eslint-disable-next-line no-useless-catch
+
     try {
         await empresasApi.delete(`/${id}`);
     } catch (error) {
+        console.log(error)
         throw error;
     }
 };

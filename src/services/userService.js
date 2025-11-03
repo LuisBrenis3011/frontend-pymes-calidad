@@ -2,19 +2,9 @@ import usersApi from "../api/usersApi.js";
 
 const BASE_URL = '';
 
-// const config = () => {
-//     return {
-//         headers: {
-//             'Authorization': sessionStorage.getItem('token'),
-//             'Content-Type': 'application/json',
-//         }
-//     }
-// }
-
 export const findAll = async() => {
     try {
-        const response = await usersApi.get(BASE_URL);
-        return response;
+        return await usersApi.get(BASE_URL);
     } catch (error) {
         console.error(error);
         throw error;
@@ -22,7 +12,6 @@ export const findAll = async() => {
 }
 
 export const save = async ({ username, email, password, admin }) => {
-    // eslint-disable-next-line no-useless-catch
     try {
         return await usersApi.post(BASE_URL, {
             username,
@@ -31,12 +20,12 @@ export const save = async ({ username, email, password, admin }) => {
             admin
         });
     } catch (error) {
+        console.log(error)
         throw error;
     }
 }
 
 export const update = async({ id, username, email, admin }) => {
-    // eslint-disable-next-line no-useless-catch
     try{
         return await usersApi.put(`${BASE_URL}/${id}`, {
             username,
@@ -44,15 +33,17 @@ export const update = async({ id, username, email, admin }) => {
             admin,
         });
     } catch (error) {
+        console.log(error)
         throw error;
     }
 }
 
 export const remove = async (id) => {
-    // eslint-disable-next-line no-useless-catch
     try {
         await usersApi.delete(`${BASE_URL}/${id}`);
     } catch (error) {
+        console.log(error)
         throw error;
     }
 }
+
