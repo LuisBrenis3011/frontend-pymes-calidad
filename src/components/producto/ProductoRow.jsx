@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import {ProductoContext} from "../../context/ProductoContext.jsx";
+import { ProductoContext } from "../../context/ProductoContext.jsx";
 
-export const ProductoRow = ({ id, nombre, descripcion, valorUnitario, unidadMedida}) => {
+export const ProductoRow = ({ id, nombre, descripcion, valorUnitario, unidadMedida, empresaId }) => {
 
     const { handlerProductoSelectedForm, handlerRemoveProducto } = useContext(ProductoContext);
 
@@ -31,7 +31,7 @@ export const ProductoRow = ({ id, nombre, descripcion, valorUnitario, unidadMedi
                 <button
                     type="button"
                     className="btn btn-danger btn-sm"
-                    onClick={() => handlerRemoveProducto(id)}
+                    onClick={() => handlerRemoveProducto(id, empresaId)}
                 >
                     Eliminar
                 </button>

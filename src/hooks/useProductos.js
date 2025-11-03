@@ -63,8 +63,8 @@ export const useProductos = () => {
         }
     };
 
-    // Eliminar producto
-    const handlerRemoveProducto = async (empresaId, id) => {
+    // Eliminar producto - ORDEN CORREGIDO: id primero, empresaId después
+    const handlerRemoveProducto = async (id, empresaId) => {
         Swal.fire({
             title: "¿Estás seguro?",
             text: "No podrás revertir esto",
@@ -75,7 +75,7 @@ export const useProductos = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    await remove(empresaId, id);
+                    await remove(id, empresaId);
                     dispatch({ type: "removeProducto", payload: id });
                     await Swal.fire("Eliminado", "El producto fue eliminado", "success");
                 } catch (error) {
